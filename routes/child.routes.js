@@ -1,8 +1,7 @@
 const router = require("express").Router();
-const Parent = require("../models/Parent.model")
 const Child = require("../models/Child.model")
 
-// GET /api/child/all - Get all children
+// GET /api/child/all - Get all children of a specific parent
 router.get("/all/:parentId", async (req, res, next) => {
     // console.log(req.params.parentId)
 
@@ -14,7 +13,7 @@ router.get("/all/:parentId", async (req, res, next) => {
     }
 })
 
-//POST /api/child/new - Create a new children
+//POST /api/child/new - Create a new children of a specific parent
 router.post("/new/:parentId", async (req, res, next) => {
     try {
         const newChild = await Child.create({

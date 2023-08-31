@@ -16,12 +16,12 @@ router.use("/parent", parentRouter)
 const childRouter = require("./child.routes")
 router.use("/child", childRouter)
 
-// // playlist routes
-// const playlistRouter = require("./playlist.routes")
-// router.use("/playlist", playlistRouter)
+// playlist routes
+const playlistRouter = require("./playlist.routes")
+router.use("/playlist", playlistRouter)
 
-// // video routes
-// const videoRouter = require("./video.routes")
-// router.use("/video", videoRouter)
+// video routes
+const videoRouter = require("./video.routes")
+router.use("/video", videoRouter)
 
 module.exports = router;
