@@ -7,6 +7,13 @@ module.exports = (app) => {
   app.use((err, req, res, next) => {
     // whenever you call next(err), this middleware will handle the error
     // always logs the error
+
+    //401 from jwt, token not valid informes FE about this type of error
+    if (err.status === 401) {
+      res.status(401).json({ errorMessage: "Token doesn't exist or is invalid" })
+      return;
+    }
+
     console.error("ERROR", req.method, req.path, err);
 
     // only render if the error ocurred before sending the response

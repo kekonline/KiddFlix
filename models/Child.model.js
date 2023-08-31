@@ -17,9 +17,9 @@ const childSchema = new Schema(
         parent: {
             type: Schema.Types.ObjectId,
             ref: "Parent"
-        },
+        }
     }
 );
 
-const Child = model("User", childSchema);
+const Child = model("Child", childSchema);
 module.exports = Child;

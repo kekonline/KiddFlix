@@ -18,5 +18,5 @@ const videoSchema = new Schema(
     }
 );
 
-const Video = model("User", videoSchema);
+const Video = model("Video", videoSchema);
 module.exports = Video;

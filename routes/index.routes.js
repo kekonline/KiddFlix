@@ -8,13 +8,13 @@ router.get("/", (req, res, next) => {
 const authRouter = require("./auth.routes")
 router.use("/auth", authRouter)
 
-// // parent routes
-// const parentRouter = require("./parent.routes")
-// router.use("/parent", parentRouter)
+// parent routes
+const parentRouter = require("./parent.routes")
+router.use("/parent", parentRouter)
 
-// // child routes
-// const childRouter = require("./child.routes")
-// router.use("/child", childRouter)
+// child routes
+const childRouter = require("./child.routes")
+router.use("/child", childRouter)
 
 // // playlist routes
 // const playlistRouter = require("./playlist.routes")
