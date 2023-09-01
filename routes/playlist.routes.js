@@ -6,6 +6,7 @@ router.get("/all/:childid", async (req, res, next) => {
     try {
         const AllPlaylistsOfChild = await Playlist.find({ child: req.params.childid });
         res.json(AllPlaylistsOfChild);
+        console.log(AllPlaylistsOfChild);
     } catch (error) {
         next(error);
     }
@@ -56,5 +57,30 @@ router.put("/:playlistid", async (req, res, next) => {
         next(error);
     }
 })
+
+// GET /api/playlist/videos/:playlistid - Get all videos of a specific playlist
+router.get("/videos/:playlistId", async (req, res, next) => {
+
+
+
+    try {
+        const AllVideosOfPlaylist = await Playlist.findById(req.params.playlistId).populate("video");
+
+
+        console.log("id of playlist: ", AllVideosOfPlaylist)
+        res.json(AllVideosOfPlaylist);
+    } catch (error) {
+        next(error);
+    }
+})
+
+
+
+
+
+
+
+
+
 
 module.exports = router

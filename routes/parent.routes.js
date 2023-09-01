@@ -1,10 +1,12 @@
 const router = require("express").Router();
 const Parent = require("../models/Parent.model");
 
-// GET /api/parent/:parentid - Get information about a specific parent
-router.get("/:parentid", async (req, res, next) => {
+const isAuthenticated = require("../middlewares/isAuthenticated")
+
+// GET /api/parent/ - Get information about a specific parent
+router.get("/", isAuthenticated, async (req, res, next) => {
     try {
-        const parentInfo = await Parent.findById(req.params.parentid);
+        const parentInfo = await Parent.findById(req.payload._id);
         res.json(parentInfo);
     } catch (error) {
         next(error);
@@ -12,9 +14,9 @@ router.get("/:parentid", async (req, res, next) => {
 })
 
 //PUT /api/parent/:parentid - Update a specific parent
-router.put("/:parentid", async (req, res, next) => {
+router.put("/", isAuthenticated, async (req, res, next) => {
     try {
-        const newParentInfo = await Parent.findByIdAndUpdate(req.params.parentid, req.body, { new: true });
+        const newParentInfo = await Parent.findByIdAndUpdate(req.payload._id, req.body, { new: true });
         res.json(newParentInfo);
     } catch (error) {
         next(error);

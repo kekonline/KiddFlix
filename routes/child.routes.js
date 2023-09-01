@@ -1,30 +1,35 @@
 const router = require("express").Router();
 const Child = require("../models/Child.model")
+const isAuthenticated = require("../middlewares/isAuthenticated");
 
-// GET /api/child/all - Get all children of a specific parent
-router.get("/all/:parentId", async (req, res, next) => {
+// GET /api/child/all/:parentId - Get all children of a specific parent
+router.get("/all/", isAuthenticated, async (req, res, next) => {
     // console.log(req.params.parentId)
 
+
+
     try {
-        const AllChildsOfParent = await Child.find({ parent: req.params.parentId }).select({ name: 1 });
+        const AllChildsOfParent = await Child.find({ parent: req.payload._id }).select({ name: 1 });
         res.json(AllChildsOfParent);
     } catch (error) {
         next(error);
     }
 })
 
-//POST /api/child/new - Create a new children of a specific parent
-router.post("/new/:parentId", async (req, res, next) => {
+//POST /api/child/new/ - Create a new children of a specific parent
+router.post("/new/", isAuthenticated, async (req, res, next) => {
     try {
         const newChild = await Child.create({
             name: req.body.name,
-            parent: req.params.parentId,
+            parent: req.payload._id,
             picture: req.body.picture
         });
+        console.log(newChild)
         res.json(newChild);
     } catch (error) {
         next(error);
     }
+
 })
 
 // GET /api/child/:childid - Get information about a specific child

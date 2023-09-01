@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Video = require("../models/Video.model")
+const Playlist = require("../models/Playlist.model")
 
 // GET /api/video/unwatched/:childid - Get all unwatched videos of a specific child
 router.get("/unwatched/:childid", async (req, res, next) => {
@@ -66,16 +67,25 @@ router.put("/:videoid", async (req, res, next) => {
     }
 })
 
-//POST /api/video/new/:videoid - Create a new video of a specific playlist
-router.post("/new/:playlistid", async (req, res, next) => {
+//POST /api/video/new/- Create a new video and add it to a specific playlist
+router.post("/new/", async (req, res, next) => {
+
+    // console.log(req.body)
+
     try {
         const newVideo = await Video.create({
-            link: req.body.link,
-            watched: req.body.watched,
-            playlist: req.params.playlistid
+            link: req.body.link
         });
-        res.json(newVideo);
+        const addToPlaylist = await Playlist.findByIdAndUpdate(req.body.playlistId, {
+            $push: { video: newVideo._id }
+        })
+        // console.log("addToPlaylist: ", addToPlaylist)
+
+
+        console.log("only newVideo._id: ", newVideo._id)
+        res.json(addToPlaylist);
     } catch (error) {
+        console.log(error)
         next(error);
     }
 })
