@@ -128,15 +128,20 @@ router.delete("/:videoid", async (req, res, next) => {
 
 //PUT /api/video/:videoid - Update a specific video
 router.put("/:videoid", async (req, res, next) => {
+
+    // console.log(req.params.videoid)
+
     try {
         const updatedVideo = await Video.findByIdAndUpdate(
             req.params.videoid,
             {
-                link: req.body.link,
                 watched: req.body.watched,
             },
             { new: true }
         );
+
+        console.log(updatedVideo)
+
         res.json(updatedVideo);
     } catch (error) {
         next(error);

@@ -87,6 +87,24 @@ router.get("/oneVideo/:playlistId", async (req, res, next) => {
 })
 
 
+//PUT /api/playlist/name/:playlistid - Update a specific playlist name
+router.put("/name/:playlistid", async (req, res, next) => {
+
+
+    console.log(req.body.name)
+    console.log(req.params.playlistid)
+
+
+    try {
+        const newPlaylistInfo = await Playlist.findByIdAndUpdate(req.params.playlistid, { name: req.body.name }, { new: true });
+
+        console.log(newPlaylistInfo)
+
+        res.json(newPlaylistInfo);
+    } catch (error) {
+        next(error);
+    }
+})
 
 
 
