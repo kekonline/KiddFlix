@@ -6,7 +6,7 @@ router.get("/all/:childid", async (req, res, next) => {
     try {
         const AllPlaylistsOfChild = await Playlist.find({ child: req.params.childid });
         res.json(AllPlaylistsOfChild);
-        console.log(AllPlaylistsOfChild);
+        // console.log(AllPlaylistsOfChild);
     } catch (error) {
         next(error);
     }
@@ -49,7 +49,7 @@ router.delete("/:playlistid", async (req, res, next) => {
 router.put("/:playlistid", async (req, res, next) => {
 
     //! CHECK THIS PART SO VIDEOS ARE STORED PROPERLY
-    console.log(req.body)
+    // console.log(req.body)
     try {
         const newPlaylistInfo = await Playlist.findByIdAndUpdate(req.params.playlistid, req.body, { new: true });
         res.json(newPlaylistInfo);
@@ -67,14 +67,24 @@ router.get("/videos/:playlistId", async (req, res, next) => {
         const AllVideosOfPlaylist = await Playlist.findById(req.params.playlistId).populate("video");
 
 
-        console.log("id of playlist: ", AllVideosOfPlaylist)
+        // console.log("id of playlist: ", AllVideosOfPlaylist)
         res.json(AllVideosOfPlaylist);
     } catch (error) {
         next(error);
     }
 })
 
+//GET /api/playlist/oneVideo/:playlistid/- Get one video of a specific playlist
 
+router.get("/oneVideo/:playlistId", async (req, res, next) => {
+    try {
+        const OneVideoFromPlaylist = await Playlist.findById(req.params.playlistId).populate("video");
+        // console.log(OneVideoFromPlaylist.video[0].link)
+        res.json(OneVideoFromPlaylist.video[0].link);
+    } catch (error) {
+        next(error);
+    }
+})
 
 
 
