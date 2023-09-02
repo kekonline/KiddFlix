@@ -2,7 +2,7 @@ const router = require("express").Router();
 const Child = require("../models/Child.model")
 const isAuthenticated = require("../middlewares/isAuthenticated");
 
-// GET /api/child/all/:parentId - Get all children of a specific parent
+// GET /api/child/all/ - Get all children of a specific parent
 router.get("/all/", isAuthenticated, async (req, res, next) => {
     // console.log(req.params.parentId)
 

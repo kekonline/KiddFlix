@@ -23,4 +23,38 @@ router.put("/", isAuthenticated, async (req, res, next) => {
     }
 })
 
+// GET /api/parent/YOBCheck- check if the parent's year of birth is correct
+router.post("/YOBCheck", isAuthenticated, async (req, res, next) => {
+
+    try {
+        const parentInfo = await Parent.findById(req.payload._id).select({ yearOfBirth: 1 });
+        // console.log(parentInfo.yearOfBirth)
+        // console.log(req.body.yearOfBirth)
+
+        if (parentInfo.yearOfBirth === parseInt(req.body.yearOfBirth)) {
+            res.json(true)
+        } else {
+            res.json(false)
+        }
+
+
+
+    } catch (error) {
+        next(error);
+    }
+
+
+
+
+
+
+
+
+
+})
+
+
+
+
+
 module.exports = router;
