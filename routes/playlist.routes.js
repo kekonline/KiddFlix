@@ -3,7 +3,14 @@ const Playlist = require("../models/Playlist.model")
 
 // GET /api/playlist/all/:childid - Get all playlist of a specific child
 router.get("/all/:childid", async (req, res, next) => {
+
+    console.log("child if", req.params.childid);
+
+
     try {
+
+
+
         const AllPlaylistsOfChild = await Playlist.find({ child: req.params.childid });
         res.json(AllPlaylistsOfChild);
         // console.log(AllPlaylistsOfChild);
@@ -106,8 +113,20 @@ router.put("/name/:playlistid", async (req, res, next) => {
     }
 })
 
+//GET /api/playlist/number/:playlistid - Update a specific playlist name
+router.get("/playlist/number/:playlistid", async (req, res, next) => {
+
+    try {
+
+    } catch (error) {
+        next(error);
+    }
 
 
+
+
+
+})
 
 
 
