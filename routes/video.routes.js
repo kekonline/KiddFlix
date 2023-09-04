@@ -2,8 +2,11 @@ const router = require("express").Router();
 const Video = require("../models/Video.model");
 const Playlist = require("../models/Playlist.model");
 
+const isAuthenticated = require("../middlewares/isAuthenticated")
+
+
 // GET /api/video/unwatched/:childid - Get all unwatched videos of a specific child
-router.get("/unwatched/:childid", async (req, res, next) => {
+router.get("/unwatched/:childid", isAuthenticated, async (req, res, next) => {
     // console.log("in unwatched", req.params.childid);
 
     try {
@@ -35,7 +38,7 @@ router.get("/unwatched/:childid", async (req, res, next) => {
 });
 
 // GET /api/video/latest/:childid - Get all latest videos of a specific child
-router.get("/latest/:childid", async (req, res, next) => {
+router.get("/latest/:childid", isAuthenticated, async (req, res, next) => {
 
     console.log("latest", req.params.childid);
 
@@ -70,7 +73,7 @@ router.get("/latest/:childid", async (req, res, next) => {
 });
 
 // GET /api/video/random/:childid - Get 20 random video of a specific child
-router.get("/random/:childid", async (req, res, next) => {
+router.get("/random/:childid", isAuthenticated, async (req, res, next) => {
 
     try {
         const AllRandomVideosOfChild = await Playlist.find({
@@ -107,7 +110,7 @@ router.get("/random/:childid", async (req, res, next) => {
 });
 
 //GET /api/video/:videoid - Get information about a specific video
-router.get("/:videoid", async (req, res, next) => {
+router.get("/:videoid", isAuthenticated, async (req, res, next) => {
     try {
         const videoInfo = await Video.findById(req.params.videoid);
         res.json(videoInfo);
@@ -117,7 +120,7 @@ router.get("/:videoid", async (req, res, next) => {
 });
 
 //DELETE /api/video/:videoid - Delete a specific video
-router.delete("/:videoid", async (req, res, next) => {
+router.delete("/:videoid", isAuthenticated, async (req, res, next) => {
     try {
         const deletedVideo = await Video.findByIdAndDelete(req.params.videoid);
         res.json(deletedVideo);
@@ -127,7 +130,7 @@ router.delete("/:videoid", async (req, res, next) => {
 });
 
 //PUT /api/video/:videoid - Update a specific video
-router.put("/:videoid", async (req, res, next) => {
+router.put("/:videoid", isAuthenticated, async (req, res, next) => {
 
     // console.log(req.params.videoid)
 
@@ -149,7 +152,7 @@ router.put("/:videoid", async (req, res, next) => {
 });
 
 //POST /api/video/new/- Create a new video and add it to a specific playlist
-router.post("/new/", async (req, res, next) => {
+router.post("/new/", isAuthenticated, async (req, res, next) => {
     // console.log(req.body)
 
     try {

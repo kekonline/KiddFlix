@@ -24,4 +24,11 @@ router.use("/playlist", playlistRouter)
 const videoRouter = require("./video.routes")
 router.use("/video", videoRouter)
 
+//  cloudinary routes
+const uploadRoutes = require("./upload.routes");
+router.use("/upload", uploadRoutes);
+
+
+
+
 module.exports = router;

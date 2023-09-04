@@ -9,7 +9,7 @@ router.get("/all/", isAuthenticated, async (req, res, next) => {
 
 
     try {
-        const AllChildsOfParent = await Child.find({ parent: req.payload._id }).select({ name: 1 });
+        const AllChildsOfParent = await Child.find({ parent: req.payload._id });
         res.json(AllChildsOfParent);
     } catch (error) {
         next(error);
@@ -33,7 +33,7 @@ router.post("/new/", isAuthenticated, async (req, res, next) => {
 })
 
 // GET /api/child/:childid - Get information about a specific child
-router.get("/:childId", async (req, res, next) => {
+router.get("/:childId", isAuthenticated, async (req, res, next) => {
     try {
         const childInfo = await Child.findById(req.params.childId);
         res.json(childInfo);
@@ -43,7 +43,7 @@ router.get("/:childId", async (req, res, next) => {
 })
 
 //DELETE /api/child/:childid - Delete a specific child
-router.delete("/:childId", async (req, res, next) => {
+router.delete("/:childId", isAuthenticated, async (req, res, next) => {
     try {
         const deletedChild = await Child.findByIdAndDelete(req.params.childId);
         res.json(deletedChild);
@@ -53,7 +53,7 @@ router.delete("/:childId", async (req, res, next) => {
 })
 
 //PUT /api/child/:childid - Update a specific child
-router.put("/:childId", async (req, res, next) => {
+router.put("/:childId", isAuthenticated, async (req, res, next) => {
     try {
         const updatedChild = await Child.findByIdAndUpdate(req.params.childId, {
             name: req.body.name,

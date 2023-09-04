@@ -22,7 +22,8 @@ const parentSchema = new Schema(
     },
 
     picture: {
-      type: String
+      type: String,
+      default: "https://res.cloudinary.com/dfnezrziy/image/upload/v1693817739/KiddFlix/ucfialncduyflzhixpca.jpg"
     },
     userType: {
       type: String,

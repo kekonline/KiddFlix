@@ -8,7 +8,8 @@ const childSchema = new Schema(
         },
 
         picture: {
-            type: String
+            type: String,
+            default: "https://res.cloudinary.com/dfnezrziy/image/upload/v1693817681/KiddFlix/bzvqduc9bfro36l0uzb8.jpg"
         },
         userType: {
             type: String,

@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const Playlist = require("../models/Playlist.model")
-
+const isAuthenticated = require("../middlewares/isAuthenticated")
 // GET /api/playlist/all/:childid - Get all playlist of a specific child
-router.get("/all/:childid", async (req, res, next) => {
+router.get("/all/:childid", isAuthenticated, async (req, res, next) => {
 
     console.log("child if", req.params.childid);
 
@@ -20,7 +20,7 @@ router.get("/all/:childid", async (req, res, next) => {
 })
 
 //POST /api/playlist/new/:childid - Create a new playlist of a specific child
-router.post("/new/:childid", async (req, res, next) => {
+router.post("/new/:childid", isAuthenticated, async (req, res, next) => {
     try {
         const newPlaylist = await Playlist.create({
             name: req.body.name,
@@ -33,7 +33,7 @@ router.post("/new/:childid", async (req, res, next) => {
 })
 
 // GET /api/playlist/:playlistid - Get information about a specific playlist
-router.get("/:playlistid", async (req, res, next) => {
+router.get("/:playlistid", isAuthenticated, async (req, res, next) => {
     try {
         const playlistInfo = await Playlist.findById(req.params.playlistid);
         res.json(playlistInfo);
@@ -43,7 +43,7 @@ router.get("/:playlistid", async (req, res, next) => {
 })
 
 //DELETE /api/playlist/:playlistid - Delete a specific playlist
-router.delete("/:playlistid", async (req, res, next) => {
+router.delete("/:playlistid", isAuthenticated, async (req, res, next) => {
     try {
         const deletedPlaylist = await Playlist.findByIdAndDelete(req.params.playlistid);
         res.json(deletedPlaylist);
@@ -53,7 +53,7 @@ router.delete("/:playlistid", async (req, res, next) => {
 })
 
 //PUT /api/playlist/:playlistid - Update a specific playlist
-router.put("/:playlistid", async (req, res, next) => {
+router.put("/:playlistid", isAuthenticated, async (req, res, next) => {
 
     //! CHECK THIS PART SO VIDEOS ARE STORED PROPERLY
     // console.log(req.body)
@@ -66,7 +66,7 @@ router.put("/:playlistid", async (req, res, next) => {
 })
 
 // GET /api/playlist/videos/:playlistid - Get all videos of a specific playlist
-router.get("/videos/:playlistId", async (req, res, next) => {
+router.get("/videos/:playlistId", isAuthenticated, async (req, res, next) => {
 
 
 
@@ -74,7 +74,7 @@ router.get("/videos/:playlistId", async (req, res, next) => {
         const AllVideosOfPlaylist = await Playlist.findById(req.params.playlistId).populate("video");
 
 
-        // console.log("id of playlist: ", AllVideosOfPlaylist)
+        console.log("id of playlist: ", AllVideosOfPlaylist)
         res.json(AllVideosOfPlaylist);
     } catch (error) {
         next(error);
@@ -83,7 +83,7 @@ router.get("/videos/:playlistId", async (req, res, next) => {
 
 //GET /api/playlist/oneVideo/:playlistid/- Get one video of a specific playlist
 
-router.get("/oneVideo/:playlistId", async (req, res, next) => {
+router.get("/oneVideo/:playlistId", isAuthenticated, async (req, res, next) => {
     try {
         const OneVideoFromPlaylist = await Playlist.findById(req.params.playlistId).populate("video");
         // console.log(OneVideoFromPlaylist.video[0].link)
@@ -95,7 +95,7 @@ router.get("/oneVideo/:playlistId", async (req, res, next) => {
 
 
 //PUT /api/playlist/name/:playlistid - Update a specific playlist name
-router.put("/name/:playlistid", async (req, res, next) => {
+router.put("/name/:playlistid", isAuthenticated, async (req, res, next) => {
 
 
     console.log(req.body.name)
@@ -114,9 +114,13 @@ router.put("/name/:playlistid", async (req, res, next) => {
 })
 
 //GET /api/playlist/number/:playlistid - Update a specific playlist name
-router.get("/playlist/number/:playlistid", async (req, res, next) => {
+router.get("/playlist/number/:playlistid", isAuthenticated, async (req, res, next) => {
 
     try {
+
+
+
+
 
     } catch (error) {
         next(error);
