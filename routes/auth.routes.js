@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Parent = require("../models/Parent.model");
 const Child = require("../models/Child.model");
+const bcrypt = require("bcryptjs");
 
 const jwt = require("jsonwebtoken");
 const isAuthenticated = require("../middlewares/isAuthenticated");
@@ -29,11 +30,15 @@ router.post("/signin", async (req, res, next) => {
             res.status(400).json({ errorMessage: "Year of birth is not valid" });
             return;
         }
+        //! encription
+
+        const salt = await bcrypt.genSalt(10);
+        const passwordHash = await bcrypt.hash(password, salt);
 
         const newParent = await Parent.create({
             name,
             email,
-            password,
+            password: passwordHash,
             yearOfBirth,
             childName,
         });
@@ -73,12 +78,28 @@ router.post("/login", async (req, res, next) => {
                 .json({ errorMessage: "Email not registered", validLogin: false });
             return;
         }
-        if (logingInParent.password !== password) {
+
+        //!encription
+
+        const isPasswordCorrect = await bcrypt.compare(
+            password,
+            logingInParent.password
+        );
+
+        if (!isPasswordCorrect) {
             res
                 .status(400)
                 .json({ errorMessage: "Incorrect password", validLogin: false });
             return;
         }
+
+        // if (logingInParent.password !== password) {
+        //     res
+        //         .status(400)
+        //         .json({ errorMessage: "Incorrect password", validLogin: false });
+        //     return;
+        // }
+
         const logingInParentChilds = await Child.find({
             parent: logingInParent._id,
         }).select({ name: 1 });
@@ -116,29 +137,41 @@ router.post("/newPassword", isAuthenticated, async (req, res, next) => {
         const parentInfo = await Parent.findById(req.payload._id);
         // console.log(parentInfo)
 
-        if (req.body.password === parentInfo.password) {
+        const isPasswordCorrect = await bcrypt.compare(
+            req.body.password,
+            parentInfo.password
+        );
+
+        if (isPasswordCorrect) {
             // console.log("passwords are the same")
+
+
+
+            const salt = await bcrypt.genSalt(10);
+            const passwordHash = await bcrypt.hash(req.body.newPassword, salt);
+
+
+
+
+
+
+
+
             const UpdateParentInfo = await Parent.findByIdAndUpdate(
                 req.payload._id,
-                { password: req.body.newPassword },
+                { password: passwordHash },
                 { new: true }
-
             );
 
             // console.log(UpdateParentInfo);
 
             res.json({ passwordUpdated: true });
-
-
-        } else { res.json({ passwordUpdated: false }); }
-
-
-
-
+        } else {
+            res.json({ passwordUpdated: false });
+        }
     } catch (error) {
         next(error);
     }
-
 });
 
 module.exports = router;

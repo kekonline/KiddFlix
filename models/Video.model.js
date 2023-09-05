@@ -1,5 +1,7 @@
 const { Schema, model } = require("mongoose");
 
+
+
 const videoSchema = new Schema(
     {
         link: {
@@ -14,7 +16,17 @@ const videoSchema = new Schema(
         dateAdded: {
             type: Date,
             default: Date.now
-        }
+        },
+        counts: {
+            type: Number,
+            default: 0
+        },
+        favorite: {
+            type: Boolean,
+            default: false
+        },
+
+
     }
 );
 

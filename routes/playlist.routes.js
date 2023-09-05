@@ -41,12 +41,12 @@ router.get("/all/:childid", isAuthenticated, async (req, res, next) => {
 
 
 
-            console.log(a.name.localeCompare(b.name))
+            // console.log(a.name.localeCompare(b.name))
         });
 
 
 
-        console.log(AllPlaylistsOfChild)
+        // console.log(AllPlaylistsOfChild)
 
 
 
@@ -116,7 +116,7 @@ router.get("/videos/:playlistId", isAuthenticated, async (req, res, next) => {
             req.params.playlistId
         ).populate("video");
 
-        console.log("id of playlist: ", AllVideosOfPlaylist);
+        // console.log("id of playlist: ", AllVideosOfPlaylist);
         res.json(AllVideosOfPlaylist);
     } catch (error) {
         next(error);
@@ -139,8 +139,8 @@ router.get("/oneVideo/:playlistId", isAuthenticated, async (req, res, next) => {
 
 //PUT /api/playlist/name/:playlistid - Update a specific playlist name
 router.put("/name/:playlistid", isAuthenticated, async (req, res, next) => {
-    console.log(req.body.name);
-    console.log(req.params.playlistid);
+    // console.log(req.body.name);
+    // console.log(req.params.playlistid);
 
     try {
         const newPlaylistInfo = await Playlist.findByIdAndUpdate(
@@ -149,7 +149,7 @@ router.put("/name/:playlistid", isAuthenticated, async (req, res, next) => {
             { new: true }
         );
 
-        console.log(newPlaylistInfo);
+        // console.log(newPlaylistInfo);
 
         res.json(newPlaylistInfo);
     } catch (error) {
