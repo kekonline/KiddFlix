@@ -105,5 +105,40 @@ router.get("/verify", isAuthenticated, (req, res, next) => {
     res.json(req.payload);
 });
 
+//Post /auth/newPassword - password change request
+router.post("/newPassword", isAuthenticated, async (req, res, next) => {
+    //send the payload to the client
+    // console.log("token", req.payload)
+
+    // console.log(req.body);
+
+    try {
+        const parentInfo = await Parent.findById(req.payload._id);
+        // console.log(parentInfo)
+
+        if (req.body.password === parentInfo.password) {
+            // console.log("passwords are the same")
+            const UpdateParentInfo = await Parent.findByIdAndUpdate(
+                req.payload._id,
+                { password: req.body.newPassword },
+                { new: true }
+
+            );
+
+            // console.log(UpdateParentInfo);
+
+            res.json({ passwordUpdated: true });
+
+
+        } else { res.json({ passwordUpdated: false }); }
+
+
+
+
+    } catch (error) {
+        next(error);
+    }
+
+});
 
 module.exports = router;
