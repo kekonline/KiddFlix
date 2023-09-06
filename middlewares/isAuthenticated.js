@@ -11,7 +11,7 @@ const isAuthenticated = jwt({
         //   console.log(req.headers)
         // checks  we have recived a token
         if (req.headers === undefined || req.headers.authorization === undefined) {
-            console.log("No token")
+            ("No token")
             return null
         }
         //splitting token string

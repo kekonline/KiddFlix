@@ -6,24 +6,16 @@ const isAuthenticated = require("../middlewares/isAuthenticated");
 // GET /api/playlist/all/:childid - Get all playlist of a specific child
 router.get("/all/:childid", isAuthenticated, async (req, res, next) => {
     // console.log("child if", req.params.childid);
-
     try {
         const AllPlaylistsOfChild = await Playlist.find({
             child: req.params.childid,
         })
-
-
-
         const sortedVideos = AllPlaylistsOfChild.sort((a, b) => {
-            // if (a.name.localeCompare(b.name)) return 1;
-            // // if (b.name.localeCompare(a.name)) return -1;
-
             if (a.name.toUpperCase < b.name.toUpperCase) {
                 return -1;
             } else if (a.name.toUpperCase > b.name.toUpperCase) {
                 return 1;
             } else {
-                // If the lowercase versions are equal, compare the original strings
                 if (a.name < b.name) {
                     return -1;
                 } else if (a.name > b.name) {
@@ -32,25 +24,9 @@ router.get("/all/:childid", isAuthenticated, async (req, res, next) => {
                     return 0;
                 }
             }
-
-
-
-
-
-
-
-
-
             // console.log(a.name.localeCompare(b.name))
         });
-
-
-
         // console.log(AllPlaylistsOfChild)
-
-
-
-
         res.json(sortedVideos);
         // console.log(AllPlaylistsOfChild);
     } catch (error) {
@@ -95,7 +71,6 @@ router.delete("/:playlistid", isAuthenticated, async (req, res, next) => {
 
 //PUT /api/playlist/:playlistid - Update a specific playlist
 router.put("/:playlistid", isAuthenticated, async (req, res, next) => {
-    //! CHECK THIS PART SO VIDEOS ARE STORED PROPERLY
     // console.log(req.body)
     try {
         const newPlaylistInfo = await Playlist.findByIdAndUpdate(
@@ -115,7 +90,6 @@ router.get("/videos/:playlistId", isAuthenticated, async (req, res, next) => {
         const AllVideosOfPlaylist = await Playlist.findById(
             req.params.playlistId
         ).populate("video");
-
         // console.log("id of playlist: ", AllVideosOfPlaylist);
         res.json(AllVideosOfPlaylist);
     } catch (error) {
@@ -124,7 +98,6 @@ router.get("/videos/:playlistId", isAuthenticated, async (req, res, next) => {
 });
 
 //GET /api/playlist/oneVideo/:playlistid/- Get one video of a specific playlist
-
 router.get("/oneVideo/:playlistId", isAuthenticated, async (req, res, next) => {
     try {
         const OneVideoFromPlaylist = await Playlist.findById(
@@ -148,9 +121,7 @@ router.put("/name/:playlistid", isAuthenticated, async (req, res, next) => {
             { name: req.body.name },
             { new: true }
         );
-
         // console.log(newPlaylistInfo);
-
         res.json(newPlaylistInfo);
     } catch (error) {
         next(error);

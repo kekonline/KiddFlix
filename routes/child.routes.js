@@ -5,9 +5,6 @@ const isAuthenticated = require("../middlewares/isAuthenticated");
 // GET /api/child/all/ - Get all children of a specific parent
 router.get("/all/", isAuthenticated, async (req, res, next) => {
     // console.log(req.params.parentId)
-
-
-
     try {
         const AllChildsOfParent = await Child.find({ parent: req.payload._id });
         res.json(AllChildsOfParent);
@@ -64,17 +61,6 @@ router.put("/:childId", isAuthenticated, async (req, res, next) => {
         next(error);
     }
 })
-
-
-
-
-
-
-
-
-
-
-
 
 
 module.exports = router;
