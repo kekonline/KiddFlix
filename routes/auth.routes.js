@@ -10,6 +10,8 @@ const isAuthenticated = require("../middlewares/isAuthenticated");
 router.post("/signin", async (req, res, next) => {
     const { name, email, password, yearOfBirth, childName } = req.body;
 
+
+
     if (!name || !email || !password || !yearOfBirth || !childName) {
         res.status(400).json({ errorMessage: "All fields are required" });
         console.log(req.body);
