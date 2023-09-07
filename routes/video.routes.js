@@ -24,7 +24,7 @@ router.get("/unwatched/:childid", isAuthenticated, async (req, res, next) => {
             }
         });
         // console.log(onlyUnWatchedVideos);
-        res.json(onlyUnWatchedVideos.slice(0, 15));
+        res.json(onlyUnWatchedVideos.slice(0, 20));
     } catch (error) {
         next(error);
     }
@@ -51,7 +51,7 @@ router.get("/latest/:childid", isAuthenticated, async (req, res, next) => {
             if (a.dateAdded === b.dateAdded) return 0;
         });
         // console.log(sortedVideos.slice(0, 25));
-        res.json(sortedVideos.slice(0, 15));
+        res.json(sortedVideos.slice(0, 20));
     } catch (error) {
         next(error);
     }
@@ -71,7 +71,7 @@ router.get("/random/:childid", isAuthenticated, async (req, res, next) => {
             return Math.random() - 0.5
         });
         // console.log(randomVideos);
-        res.json(randomVideos.slice(0, 15));
+        res.json(randomVideos.slice(0, 20));
     } catch (error) {
         next(error);
     }
