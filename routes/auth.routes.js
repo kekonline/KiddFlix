@@ -31,11 +31,7 @@ router.post("/signin", async (req, res, next) => {
                 .status(400)
                 .json({ errorMessage: "Password must be at least 5 characters long and contain at least one uppercase letter, one lowercase letter and one number" });
             return;
-
-
-
         }
-
         if (yearOfBirth.length !== 4 || isNaN(yearOfBirth)) {
             res.status(400).json({ errorMessage: "Year of birth is not valid" });
             return;
