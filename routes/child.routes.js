@@ -21,7 +21,7 @@ router.post("/new/", isAuthenticated, async (req, res, next) => {
             parent: req.payload._id,
             picture: req.body.picture
         });
-        console.log(newChild)
+        // console.log(newChild)
         res.json(newChild);
     } catch (error) {
         next(error);

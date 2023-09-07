@@ -12,7 +12,7 @@ router.post("/signin", async (req, res, next) => {
 
     if (!name || !email || !password || !yearOfBirth || !childName) {
         res.status(400).json({ errorMessage: "All fields are required" });
-        console.log(req.body);
+        // console.log(req.body);
         return;
     }
     try {
@@ -22,6 +22,18 @@ router.post("/signin", async (req, res, next) => {
                 .status(400)
                 .json({ errorMessage: "Email already registered", emailValid: false });
             return;
+        }
+
+        const regexPassword =
+            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{5,}$/gm;
+        if (regexPassword.test(password) === false) {
+            res
+                .status(400)
+                .json({ errorMessage: "Password must be at least 5 characters long and contain at least one uppercase letter, one lowercase letter and one number" });
+            return;
+
+
+
         }
 
         if (yearOfBirth.length !== 4 || isNaN(yearOfBirth)) {
@@ -59,7 +71,7 @@ router.post("/signin", async (req, res, next) => {
         res.json({ authToken });
     } catch (error) {
         next(error);
-        console.log(error);
+        // console.log(error);
     }
 });
 
@@ -86,7 +98,6 @@ router.post("/login", async (req, res, next) => {
                 .json({ errorMessage: "Incorrect password", validLogin: false });
             return;
         }
-
         const logingInParentChilds = await Child.find({
             parent: logingInParent._id,
         }).select({ name: 1 });
