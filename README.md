@@ -526,3 +526,31 @@ Video model
 ### Slides
 
 [Slides Link](https://docs.google.com/presentation/d/12SMBXdSX9TFTras3adn3-_gTpP47OKBg2CPeZMjvA8k/edit?usp=sharing)
+
+## INSTALL
+
+Dependencies:
+
+- bcryptjs: ^2.4.3
+- cloudinary: ^1.40.0
+- cookie-parser: ^1.4.6
+- cors: ^2.8.5
+- dotenv: ^16.3.1
+- express: ^4.18.2
+- express-jwt: ^8.4.1
+- jsonwebtoken: ^9.0.2
+- mongoose: ^7.5.0
+- morgan: ^1.10.0
+- multer: ^1.4.5-lts.1
+- multer-storage-cloudinary: ^4.0.0
+- nodemon: ^3.0.1
+
+```sh
+$ npm install
+```
+
+## Dev
+
+```sh
+$ npm run dev
+```
